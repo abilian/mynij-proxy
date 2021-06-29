@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "mynij-proxy"
+version = "0.1.0"
+description = ""
+authors = ["Stefane Fermigier <sf@fermigier.com>"]
+
+packages = [{ include = "*", from = "src" }]
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+httpx = "^0.18.1"
+gunicorn = "^20.1.0"
+uvicorn = "^0.13.4"
+uvloop = "^0.15.2"
+starlette = "^0.14.2"
+httptools = "*"
+
+
+[tool.poetry.dev-dependencies]
+black = "^21.4b2"
+isort = "^5.8.0"
+honcho = "*"
+pytest = "^6.2.4"
+requests = "^2.25.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
