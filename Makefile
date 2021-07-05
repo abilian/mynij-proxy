@@ -1,5 +1,4 @@
 
-
 # The package name
 PKG=FIXME
 
@@ -7,12 +6,13 @@ PKG=FIXME
 .PHONY:
 all: test lint
 
+
 #
 # Run
 #
 .PHONY:
 run: 
-	gunicorn --bind localhost:3000 app:app
+	gunicorn -b localhost:3000 --pid server.pid -k uvicorn.workers.UvicornWorker -w 4 mynij_proxy:app
 
 
 #
