@@ -1,5 +1,5 @@
 import traceback
-from typing import Mapping, Tuple
+from typing import Dict, Mapping, Tuple
 
 import httpx
 from starlette.applications import Starlette
@@ -81,7 +81,7 @@ class ProxyEndPoint(HTTPEndpoint):
     def get_access_url(self):
         return self.headers.get("Origin", DEFAULT_ACCESS_URL)
 
-    def filter_response_headers(self, proxy_response) -> dict[str, str]:
+    def filter_response_headers(self, proxy_response) -> Dict[str, str]:
         headers = {}
         HEADERS = [
             "Content-Disposition",
