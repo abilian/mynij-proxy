@@ -12,9 +12,9 @@ python = "^3.9"
 
 httpx = "^0.18.1"
 gunicorn = "^20.1.0"
-uvicorn = "^0.13.4"
+uvicorn = "^0.14"
 uvloop = "^0.15.2"
-starlette = "^0.14.2"
+starlette = "^0.16"
 httptools = "*"
 
 

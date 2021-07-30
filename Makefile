@@ -12,7 +12,13 @@ all: test lint
 #
 .PHONY:
 run: 
-	gunicorn -b localhost:3000 --pid server.pid -k uvicorn.workers.UvicornWorker -w 4 mynij_proxy:app
+	gunicorn -b localhost:3000 \
+		--pid server.pid \
+		--keyfile ssl/httpd.key \
+		--certfile ssl/httpd.crt \
+		-k uvicorn.workers.UvicornWorker \
+		-w 4 \
+		mynij_proxy:app
 
 
 #
