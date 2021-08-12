@@ -1,5 +1,6 @@
-import traceback
-from typing import Dict, Mapping, Tuple
+from __future__ import annotations
+
+from typing import Mapping, Any
 
 import httpx
 from starlette.applications import Starlette
@@ -8,8 +9,7 @@ from starlette.requests import Request
 from starlette.responses import PlainTextResponse, Response
 from starlette.routing import Route
 
-# Extremely aggressive and hardcoded value
-TIMEOUT = 10
+TIMEOUT = 60
 
 DEFAULT_ACCESS_URL = "https://mynij.app.officejs.com"
 
@@ -25,11 +25,10 @@ class ProxyEndPoint(HTTPEndpoint):
         self.url = request.query_params["url"]
 
         status_code, content, new_headers = await self.fetch_content()
-        # debug(status_code, content, new_headers)
         response = Response(content, status_code, new_headers)
         return response
 
-    async def fetch_content(self) -> Tuple[int, bytes, dict]:
+    async def fetch_content(self) -> tuple[int, bytes, dict]:
         proxy_query_header = self.make_query_headers(self.headers)
         body = b""
         response_headers = {}
@@ -47,23 +46,21 @@ class ProxyEndPoint(HTTPEndpoint):
         #     # Invalid SSL Certificate
         #     status = 526
         except TimeoutError:
-            traceback.print_exc()
             # Gateway Timeout
             status = 504
         except httpx.TransportError:
-            traceback.print_exc()
             # Service Unavailable
             status = 503
         except httpx.HTTPError:
-            traceback.print_exc()
             # Internal Server Error
             status = 500
 
         return status, body, response_headers
 
-    def make_query_headers(self, headers: Mapping) -> Mapping:
+    @staticmethod
+    def make_query_headers(headers: Mapping[str, Any]) -> dict[str, str]:
         request_headers = {}
-        HEADERS = [
+        keep_headers = [
             "Content-Type",
             "Accept",
             "Accept-Language",
@@ -71,7 +68,7 @@ class ProxyEndPoint(HTTPEndpoint):
             "If-Modified-Since",
             "If-None-Match",
         ]
-        for k in HEADERS:
+        for k in keep_headers:
             v = headers.get(k)
             if v:
                 request_headers[k] = str(v)
@@ -81,9 +78,9 @@ class ProxyEndPoint(HTTPEndpoint):
     def get_access_url(self):
         return self.headers.get("Origin", DEFAULT_ACCESS_URL)
 
-    def filter_response_headers(self, proxy_response) -> Dict[str, str]:
+    def filter_response_headers(self, proxy_response: Response) -> dict[str, str]:
         headers = {}
-        HEADERS = [
+        keep_headers = [
             "Content-Disposition",
             "Content-Type",
             "Date",
@@ -96,7 +93,7 @@ class ProxyEndPoint(HTTPEndpoint):
         ]
         for k, v in proxy_response.headers.items():
             k = k.title()
-            if k in HEADERS:
+            if k in keep_headers:
                 headers[k] = v
         return headers
 

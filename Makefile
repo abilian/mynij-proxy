@@ -11,7 +11,7 @@ all: test lint
 # Run
 #
 .PHONY:
-run: 
+run:
 	gunicorn -b localhost:3000 \
 		--pid server.pid \
 		--keyfile ssl/httpd.key \
@@ -64,7 +64,7 @@ test-randomly:
 .PHONY:
 test-with-coverage:
 	@echo "--> Running Python tests"
-	py.test --cov $(PKG)
+	pytest --cov $(PKG)
 	@echo ""
 
 .PHONY:
@@ -78,13 +78,10 @@ test-with-typeguard:
 # Various Checkers
 #
 .PHONY:
-lint: lint-py lint-mypy lint-rst lint-doc
+lint: lint-py lint-mypy lint-bandit
 
 .PHONY:
 lint-ci: lint
-
-.PHONY:
-lint-all: lint lint-bandit
 
 .PHONY:
 lint-py:
@@ -99,23 +96,9 @@ lint-mypy:
 	@echo ""
 
 .PHONY:
-lint-travis:
-	@echo "--> Linting .travis.yml files"
-	travis lint --no-interactive
-	@echo ""
-
-.PHONY:
-lint-rst:
-	@echo "--> Linting .rst files"
-	rst-lint *.rst
-	@echo ""
-
-.PHONY:
-lint-doc:
-	@echo "--> Linting doc"
-	@echo "TODO"
-	#sphinx-build -W -b dummy docs/ docs/_build/
-	#sphinx-build -b dummy docs/ docs/_build/
+lint-bandit:
+	@echo "--> Security audit w/ Bandit"
+	bandit -q src/*.py
 	@echo ""
 
 
