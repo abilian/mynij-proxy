@@ -19,11 +19,15 @@ httptools = "*"
 
 
 [tool.poetry.dev-dependencies]
+bandit = "^1.7.0"
 black = "^21.4b2"
-isort = "^5.8.0"
+codecov = "^2.1.12"
 honcho = "*"
+isort = "^5.8.0"
 pytest = "^6.2.4"
 requests = "^2.25.1"
+safety = "^1.10.3"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
