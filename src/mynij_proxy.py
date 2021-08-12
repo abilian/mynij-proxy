@@ -20,7 +20,7 @@ class ProxyEndPoint(HTTPEndpoint):
     headers: Mapping[str, str]
     url: str
 
-    async def get(self, request: Request):
+    async def get(self, request: Request) -> Response:
         self.headers = request.headers
         self.url = request.query_params["url"]
 
@@ -75,10 +75,10 @@ class ProxyEndPoint(HTTPEndpoint):
 
         return request_headers
 
-    def get_access_url(self):
+    def get_access_url(self) -> str:
         return self.headers.get("Origin", DEFAULT_ACCESS_URL)
 
-    def filter_response_headers(self, proxy_response: Response) -> dict[str, str]:
+    def filter_response_headers(self, proxy_response: httpx.Response) -> dict[str, str]:
         headers = {}
         keep_headers = [
             "Content-Disposition",
@@ -98,7 +98,7 @@ class ProxyEndPoint(HTTPEndpoint):
         return headers
 
 
-async def ping(request):
+async def ping(request) -> Response:
     return PlainTextResponse("OK")
 
 
