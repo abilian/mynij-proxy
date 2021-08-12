@@ -27,6 +27,7 @@ isort = "^5.8.0"
 pytest = "^6.2.4"
 requests = "^2.25.1"
 safety = "^1.10.3"
+flake8 = "^3.9.2"
 
 
 [build-system]
