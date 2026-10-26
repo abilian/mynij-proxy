@@ -3,20 +3,14 @@ name = "mynij-proxy"
 version = "0.1.0"
 description = ""
 authors = ["Stefane Fermigier <sf@fermigier.com>"]
-
 packages = [{ include = "*", from = "src" }]
-
 
 [tool.poetry.dependencies]
 python = "^3.9"
-
-httpx = "^0.18.1"
-gunicorn = "^20.1.0"
-uvicorn = "^0.14"
-uvloop = "^0.15.2"
-starlette = "^0.16"
-httptools = "*"
-
+httpx = ">=0.18.1"
+gunicorn = ">=20.1.0"
+uvicorn = ">=0.13.4"
+starlette = ">=0.14.2"
 
 [tool.poetry.dev-dependencies]
 bandit = "^1.7.0"
@@ -29,7 +23,6 @@ requests = "^2.25.1"
 safety = "^1.10.3"
 flake8 = "^3.9.2"
 mypy = "^0.910"
-
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

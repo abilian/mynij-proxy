@@ -18,16 +18,14 @@ setup(
     python_requires="==3.*,>=3.9.0",
     author="Stefane Fermigier",
     author_email="sf@fermigier.com",
-    packages=[],
+    py_modules=["mynij_proxy"],
     package_dir={"": "src"},
     package_data={},
     install_requires=[
-        "gunicorn==20.*,>=20.1.0",
-        "httptools",
-        "httpx==0.*,>=0.18.1",
-        "starlette==0.*,>=0.14.2",
-        "uvicorn==0.*,>=0.13.4",
-        "uvloop==0.*,>=0.15.2",
+        "gunicorn>=20.1.0",
+        "httpx>=0.18.1",
+        "starlette>=0.14.2",
+        "uvicorn>=0.13.4",
     ],
     extras_require={
         "dev": [
